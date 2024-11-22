@@ -1,26 +1,27 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import Login from '../components/LoginComponent';
-import { useLocation, useNavigate } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const LoginPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
-
+    // Check if the user is already authenticated
+    const userData = JSON.parse(localStorage.getItem("userData") || "{}");
+    const token = JSON.parse(localStorage.getItem("token") || "{}");
     useEffect(() => {
-        // Check if the user is already authenticated
-        const userData = JSON.parse(localStorage.getItem("userData") || "{}");
-        const userId = userData?.userId;
 
-        if (userId) {
-            // Redirect to dashboard or intended page if the user is authenticated
+        if (userData.userId && token) {
             let intended = location.state;
             if (intended) {
                 navigate(intended.from);
+            } else {
+                navigate('/dashboard')
             }
         }
-    }, [location.state, navigate]);
+    }, [location.state, navigate, token, userData.userId]);
 
     const handleLoginSuccess = (data) => {
+
         let intended = location.state;
         if (intended) {
             navigate(intended.from);
@@ -28,14 +29,14 @@ const LoginPage = () => {
             if (data.assignedNumber) {
                 navigate("/dashboard");
             } else {
-                navigate("/pick");
+                navigate("/");
             }
         }
     };
 
     return (
         <div className="container">
-            <Login onLoginSuccess={handleLoginSuccess} />
+            <Login onLoginSuccess={handleLoginSuccess}/>
         </div>
     );
 };

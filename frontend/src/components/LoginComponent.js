@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
+
 import {loginUser} from '../api'; // Import loginUser function from the API helper file
 
 const LoginComponent = ({onLoginSuccess}) => {
@@ -17,13 +17,17 @@ const LoginComponent = ({onLoginSuccess}) => {
         const response = await loginUser({ username, password });
 
 
+        console.log(response)
+
+
         // Check for a successful login based on server response
-        if (response.message === "Login successful") {
+        if (response.token) {
             // Instead of checking for the token, we assume it's now in the cookie
-            localStorage.setItem('userData', JSON.stringify(response)); // Store user data to check assignedNumber
+            localStorage.setItem('userData', JSON.stringify(response.userData)); // Store user data to check assignedNumber
+            localStorage.setItem('token', JSON.stringify(response.token)); // Store user data to check assignedNumber
 
             // Pass response to parent via callback
-            onLoginSuccess(response);
+            onLoginSuccess(response.userData);
         } else {
             setError(new Error('Login failed. Please check your credentials.'));
         }

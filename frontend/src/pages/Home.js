@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getAllUsers } from "../api"; // API function to fetch all users
+import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {getAllUsers} from "../api"; // API function to fetch all users
 
 const HomePage = () => {
     const [users, setUsers] = useState([]); // State to store all users
     const [loading, setLoading] = useState(true); // Track loading state
     const [error, setError] = useState(null); // Track any errors
     const navigate = useNavigate();
-
+    const userData = JSON.parse(localStorage.getItem("userData") || "{}");
+    const token = JSON.parse(localStorage.getItem("token") || "{}");
     // Function to mask phone number
     const maskPhoneNumber = (phone) => {
         if (!phone) return phone;
@@ -44,12 +45,9 @@ const HomePage = () => {
 
     // Function to handle navigation based on user data
     const handleNavigate = (user) => {
-        const userData = JSON.parse(localStorage.getItem("userData") || "{}");
-        const isLoggedIn = userData?.userId;
-
-        if (!isLoggedIn) {
+        if (!token && userData) {
             // If not logged in, redirect to login page with the intended destination
-            navigate("/login", { state: { from: user.chosen ? "/dashboard" : "/pick" } });
+            navigate("/login", {state: {from: user.chosen ? "/dashboard" : "/pick"}});
         } else {
             // If logged in, check the picked field and navigate accordingly
             if (user.chosen) {
@@ -62,7 +60,7 @@ const HomePage = () => {
 
     return (
         <div className="container mt-3">
-            <h2 className="text-center mb-3 fs-4">Home Page</h2>
+            <h2 className="text-center mb-3 fs-4">Welcome</h2>
             <div className="row justify-content-center">
                 {/* Table Container */}
                 <div className="col-12 col-lg-6">
@@ -74,28 +72,28 @@ const HomePage = () => {
                             <div className="table-responsive">
                                 <table className="table table-striped table-bordered mb-0 modern-table">
                                     <thead className="table-dark">
-                                        <tr>
-                                            <th className="p-2 fs-8">Name</th>
-                                            <th className="p-2 fs-8">Phone</th>
-                                            <th className="p-2 fs-8">Action</th>
-                                        </tr>
+                                    <tr>
+                                        <th className="p-2 fs-8">Name</th>
+                                        <th className="p-2 fs-8">Phone</th>
+                                        <th className="p-2 fs-8">Action</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        {users.map((user, index) => (
-                                            <tr key={user._id} className="table-row">
+                                    {users.map((user, index) => (
+                                        <tr key={user._id} className="table-row">
 
-                                                <td className="p-2 fs-8">{user.name}</td>
-                                                <td className="p-2 fs-8">{maskPhoneNumber(user.phoneNumber)}</td>
-                                                <td className="p-2">
-                                                    <button
-                                                        className={`btn btn-sm ${user.chosen ? "btn-success" : "btn-primary"}`}
-                                                        onClick={() => handleNavigate(user)}
-                                                    >
-                                                        {user.chosen ? "Check your position" : "Pick Number"}
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))}
+                                            <td className="p-2 fs-8">{user.name}</td>
+                                            <td className="p-2 fs-8">{maskPhoneNumber(user.phoneNumber)}</td>
+                                            <td className="p-2">
+                                                <button
+                                                    className={`btn btn-sm ${user.chosen ? "btn-success" : "btn-primary"}`}
+                                                    onClick={() => handleNavigate(user)}
+                                                >
+                                                    {user.chosen ? "Check your position" : "Pick Number"}
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
                                     </tbody>
                                 </table>
                             </div>
