@@ -30,6 +30,10 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(join(__dirname, '../frontend/build')));
 }
 
+
+app.get('*', (req, res) => {
+    res.sendFile(join(__dirname, '../frontend/build/index.html'));
+});
 // Use the routes
 app.use("/api/users", userRoutes);
 app.use("/api/numbers", numberRoutes);
