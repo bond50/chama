@@ -1,0 +1,80 @@
+/* App.css */
+
+/* Global Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1, h2 {
+  color: #333;
+  text-align: center;
+}
+/* Modern card styling */
+.card {
+    border-radius: 15px;
+    border: none;
+}
+button.btn-primary {
+    border-radius: 25px;
+}
+div {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+/*div:hover {*/
+/*    transform: scale(1.05);*/
+/*    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);*/
+/*}*/
+.alert {
+    border-radius: 10px;
+}
+/* Modern Table Styles */
+.modern-table {
+    border-radius: 8px;
+    overflow: hidden; /* Rounded corners */
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f9f9f9; /* Lighter background for odd rows */
+}
+
+.table-row:hover {
+    background-color: #e9ecef; /* Highlight row on hover */
+    cursor: pointer;
+}
+
+.table th,
+.table td {
+    padding: 8px 12px; /* Smaller padding for compactness */
+    font-size: 14px; /* Smaller font for a modern, clean look */
+}
+
+.table th {
+    font-weight: bold;
+    text-align: center;
+}
+
+.table td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.card-header {
+    border-bottom: 1px solid #dee2e6; /* Subtle border at the bottom of the card header */
+}
+
+.card-body {
+    padding: 0.5rem;
+}
+
+.table-bordered {
+    border: 1px solid #dee2e6;
+}
+
+.table-bordered td,
+.table-bordered th {
+    border: 1px solid #dee2e6;
+}
