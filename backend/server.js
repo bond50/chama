@@ -14,7 +14,7 @@ const {join} = require("node:path");
 
 const app = express();
 
-console.log(process.env.CLIENT_URL)
+
 // Middleware
 app.use(cors({
   origin: process.env.CLIENT_URL,
